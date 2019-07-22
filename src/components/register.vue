@@ -26,7 +26,7 @@
             <!-- 注册按钮 -->
             <el-row>
               <el-col>
-                <el-link type="primary" href="/register">已有账号请登录</el-link>
+                <el-link type="primary" href="/login">已有账号请登录</el-link>
               </el-col>
             </el-row>
             <!-- 登录  重置按钮 -->
@@ -47,17 +47,17 @@
 </template>
 <script>
 export default {
-  name:"Login",
-  data() {
+  name: 'Login',
+  data () {
     return {
       sizeForm: {
-        name: ""
+        name: ''
       }
-    };
+    }
   },
   methods: {
-    onSubmit() {
-      console.log("123");
+    onSubmit () {
+      console.log('')
     }
   }
 }

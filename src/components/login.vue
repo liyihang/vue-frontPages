@@ -47,17 +47,17 @@
 </template>
 <script>
 export default {
-  name:"Login",
-  data() {
+  name: 'Login',
+  data () {
     return {
       sizeForm: {
-        name: ""
+        name: ''
       }
-    };
+    }
   },
   methods: {
-    onSubmit() {
-      console.log("123");
+    onSubmit () {
+      console.log('123')
     }
   }
 }
