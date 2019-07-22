@@ -26,13 +26,13 @@
             <!-- 注册按钮 -->
             <el-row>
               <el-col>
-                <el-link type="primary" href="/register">还未注册，请先注册</el-link>
+                <el-link type="primary" href="/register">已有账号请登录</el-link>
               </el-col>
             </el-row>
             <!-- 登录  重置按钮 -->
             <el-row>
               <el-col>
-                <el-button type="primary">登录</el-button>
+                <el-button type="primary">注册</el-button>
                 <el-button type="info">重置</el-button>
               </el-col>
             </el-row>
