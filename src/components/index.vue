@@ -15,7 +15,6 @@
         v-for="(item, index) in tag_items"
         :key="index"
         size="medium"
-        disable-transitions="true"
         effect="dark"
       >{{item.label}}</el-tag>
     </div>
@@ -24,112 +23,10 @@
     <!-- 各种学科展示 -->
     <el-container>
       <el-row :gutter="24">
-        <el-col :span="6">
+        <el-col :span="6" v-for="(item, index) in course_items" :key="index">
           <el-card shadow="hover">
             <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>Java从入门到放弃</p>
+            <p>{{item.name}}</p>
           </el-card>
         </el-col>
       </el-row>
@@ -139,66 +36,10 @@
     <el-divider></el-divider>
     <el-container>
       <el-row :gutter="12">
-        <el-col :span="6">
+        <el-col :span="6" v-for="(item, index) in interview_items" :key="index">
           <el-card shadow="always">
-            <h3>如何追踪变化</h3>
-            <p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty</p>
-            <el-link href="#">阅读更多</el-link>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="always">
-            <h3>如何追踪变化</h3>
-            <p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty</p>
-            <el-link href="#">阅读更多</el-link>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="always">
-            <h3>如何追踪变化</h3>
-            <p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty</p>
-            <el-link href="#">阅读更多</el-link>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="always">
-            <h3>如何追踪变化</h3>
-            <p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty</p>
-            <el-link href="#">阅读更多</el-link>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="always">
-            <h3>如何追踪变化</h3>
-            <p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty</p>
-            <el-link href="#">阅读更多</el-link>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="always">
-            <h3>如何追踪变化</h3>
-            <p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty</p>
-            <el-link href="#">阅读更多</el-link>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="always">
-            <h3>如何追踪变化</h3>
-            <p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty</p>
-            <el-link href="#">阅读更多</el-link>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="always">
-            <h3>如何追踪变化</h3>
-            <p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty</p>
-            <el-link href="#">阅读更多</el-link>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="always">
-            <h3>如何追踪变化</h3>
-            <p>当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty</p>
+            <h3>{{item.title}}</h3>
+            <p>{{item.short_article}}</p>
             <el-link href="#">阅读更多</el-link>
           </el-card>
         </el-col>
@@ -224,6 +65,30 @@ export default {
         { label: '前端面试题' },
         { label: 'Vue' },
         { label: 'react' }
+      ],
+      course_items: [
+        { id: 1, name: 'Java工程实践', img: './assets/java.png' },
+        { id: 2, name: 'Java工程实践', img: '../assets/java.png' },
+        { id: 3, name: 'Java工程实践', img: '../assets/java.png' },
+        { id: 4, name: 'Java工程实践', img: '../assets/java.png' },
+        { id: 5, name: 'Java工程实践', img: '../assets/java.png' },
+        { id: 6, name: 'Java工程实践', img: '../assets/java.png' },
+        { id: 7, name: 'Java工程实践', img: '../assets/java.png' },
+        { id: 8, name: 'Java工程实践', img: '../assets/java.png' },
+        { id: 9, name: 'Java工程实践', img: '../assets/java.png' },
+        { id: 10, name: 'Java工程实践', img: '../assets/java.png' }
+      ],
+      interview_items: [
+        { id: 1, title: '如何追踪变化', short_article: '当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty' },
+        { id: 2, title: '如何追踪变化', short_article: '当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty' },
+        { id: 3, title: '如何追踪变化', short_article: '当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty' },
+        { id: 4, title: '如何追踪变化', short_article: '当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty' },
+        { id: 5, title: '如何追踪变化', short_article: '当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty' },
+        { id: 6, title: '如何追踪变化', short_article: '当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty' },
+        { id: 7, title: '如何追踪变化', short_article: '当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty' },
+        { id: 8, title: '如何追踪变化', short_article: '当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty' },
+        { id: 9, title: '如何追踪变化', short_article: '当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty' },
+        { id: 10, title: '如何追踪变化', short_article: '当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty' }
       ]
     }
   }

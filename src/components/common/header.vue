@@ -4,7 +4,7 @@
     <el-header>
       <div class="line"></div>
       <el-menu
-        :default-active="activeIndex2"
+        :default-active="activeIndex"
         class="el-menu-demo"
         mode="horizontal"
         @select="handleSelect"
@@ -19,8 +19,8 @@
           <a href="#" target="_blank">意见反馈</a>
         </el-menu-item>
         <el-menu-item class="exam-info">
-            <el-link href="/login">登录</el-link>/
-            <el-link type="danger" href="/register">注册</el-link>
+          <el-link href="/login">登录</el-link>/
+          <el-link type="danger" href="/register">注册</el-link>
         </el-menu-item>
       </el-menu>
     </el-header>
@@ -28,6 +28,11 @@
 </template>
 <script>
 export default {
+  data () {
+    return {
+      activeIndex: '1'
+    }
+  },
   name: 'Header',
   methods: {
     handleSelect () {
@@ -40,10 +45,9 @@ export default {
 .el-header {
   padding: 0;
 }
-.el-menu.el-menu--horizontal{
+.el-menu.el-menu--horizontal {
   padding-left: 20%;
   background-color: black;
-
 }
 .exam-info {
   float: right;
