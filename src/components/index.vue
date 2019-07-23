@@ -25,8 +25,8 @@
       <el-row :gutter="24">
         <el-col :span="6" v-for="(item, index) in course_items" :key="index">
           <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" />
-            <p>{{item.name}}</p>
+            <img src="../assets/java.png" alt class="exam-img" @click="goDetail(item.id)" />
+            <p @click="goDetail(item.id)">{{item.name}}</p>
           </el-card>
         </el-col>
       </el-row>
@@ -38,9 +38,9 @@
       <el-row :gutter="12">
         <el-col :span="6" v-for="(item, index) in interview_items" :key="index">
           <el-card shadow="always">
-            <h3>{{item.title}}</h3>
-            <p>{{item.short_article}}</p>
-            <el-link href="#">阅读更多</el-link>
+            <h3 @click="articleDetail(item.id)">{{item.title}}</h3>
+            <p @click="articleDetail(item.id)">{{item.short_article}}</p>
+            <el-link @click="articleDetail(item.id)">阅读更多</el-link>
           </el-card>
         </el-col>
       </el-row>
@@ -90,6 +90,17 @@ export default {
         { id: 9, title: '如何追踪变化', short_article: '当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty' },
         { id: 10, title: '如何追踪变化', short_article: '当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty' }
       ]
+    }
+  },
+  methods: {
+    // 获取详课程情页
+    goDetail (id) {
+      // console.log(this)
+      this.$router.push('/coursedetail/' + id)
+    },
+    // 获取文章详情
+    articleDetail (id) {
+      this.$router.push('/interviewdetail/' + id)
     }
   }
 }
