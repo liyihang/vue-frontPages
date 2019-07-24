@@ -320,7 +320,7 @@ export default {
   transition: transform 1s var(--ease-out-quart);
 }
 .easing-variables:hover {
-  transform: rotate(1280000deg);
+  transform: rotate(128000deg);
 }
 h4{
   margin:0;
