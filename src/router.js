@@ -5,6 +5,7 @@ import Register from './components/register.vue'
 import Index from './components/index.vue'
 import CourseDetail from './components/courseDetail.vue'
 import InterviewDetail from './components/interviewDetail.vue'
+import Exam from './components/exam.vue'
 
 Vue.use(Router)
 
@@ -12,6 +13,11 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '/exam/:id',
+      name: 'exam',
+      component: Exam
+    },
     {
       path: '/interviewdetail/:id',
       name: 'InterviewDetail',

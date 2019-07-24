@@ -12,10 +12,13 @@
         text-color="#fff"
         active-text-color="#ffd04b"
       >
-        <el-menu-item index="1">学院网站</el-menu-item>
-        <el-menu-item index="2">Tlias系统</el-menu-item>
-        <el-menu-item index="3">MOOC视屏</el-menu-item>
-        <el-menu-item index="4">
+        <el-menu-item index="1">
+          <router-link to="/">首页</router-link>
+        </el-menu-item>
+        <el-menu-item index="2">学院网站</el-menu-item>
+        <el-menu-item index="3">Tlias系统</el-menu-item>
+        <el-menu-item index="4">MOOC视屏</el-menu-item>
+        <el-menu-item index="5">
           <a href="#" target="_blank">意见反馈</a>
         </el-menu-item>
         <el-menu-item class="exam-info">
