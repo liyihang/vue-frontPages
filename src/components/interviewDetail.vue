@@ -3,6 +3,9 @@
     <!-- 固定头部 -->
     <exam-header></exam-header>
     <h1>{{$route.params}}</h1>
+    <h1>{{$route.params}}</h1>
+    <h1>{{$route.params}}</h1>
+    <h1>{{$route.params}}</h1>
   </div>
 </template>
 <script>
