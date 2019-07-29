@@ -6,10 +6,10 @@ import ElementUI from 'element-ui'
 
 import 'element-ui/lib/theme-chalk/index.css'
 import Header from './components/common/header.vue'
-import Footer from './components/common/footer.vue'
+import Header1 from './components/common/header1.vue'
 
 Vue.component('exam-header', Header)
-Vue.component('exam-footer', Footer)
+Vue.component('exam-header1', Header1)
 
 Vue.use(ElementUI)
 

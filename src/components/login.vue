@@ -32,7 +32,7 @@
             <!-- 登录  重置按钮 -->
             <el-row>
               <el-col>
-                <el-button type="primary">登录</el-button>
+                <el-button type="primary" @click="login">登录</el-button>
                 <el-button type="info">重置</el-button>
               </el-col>
             </el-row>
@@ -51,13 +51,17 @@ export default {
   data () {
     return {
       sizeForm: {
-        name: ''
+        name: '',
+        password: ''
       }
     }
   },
   methods: {
-    onSubmit () {
-      console.log('123')
+    login () {
+      // 模拟假的登录
+      if (this.sizeForm.name == this.sizeForm.password !== '') {
+        this.$router.push('/user')
+      }
     }
   }
 }

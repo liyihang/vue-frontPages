@@ -6,6 +6,7 @@ import Index from './components/index.vue'
 import CourseDetail from './components/courseDetail.vue'
 import InterviewDetail from './components/interviewDetail.vue'
 import Exam from './components/exam.vue'
+import User from './components/user.vue'
 
 Vue.use(Router)
 
@@ -13,35 +14,47 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    // 做题
     {
       path: '/exam/:id',
       name: 'exam',
       component: Exam
     },
+    // 面试
     {
       path: '/interviewdetail/:id',
       name: 'InterviewDetail',
       component: InterviewDetail
     },
+    // 课程页
     {
       path: '/coursedetail/:id',
       name: 'CourseDetail',
       component: CourseDetail
     },
+    // 登录
     {
       path: '/login',
       name: 'login',
       component: Login
     },
+    // 注册
     {
       path: '/register',
       name: 'regster',
       component: Register
     },
+    // 首页
     {
       path: '/',
       name: 'index',
       component: Index
+    },
+    // 个人中心
+    {
+      path: '/user',
+      name: 'user',
+      component: User
     }
     // {
     //   path: '/about',
