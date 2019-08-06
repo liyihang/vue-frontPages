@@ -7,6 +7,7 @@ import CourseDetail from './components/courseDetail.vue'
 import InterviewDetail from './components/interviewDetail.vue'
 import Exam from './components/exam.vue'
 import User from './components/user.vue'
+import UserStudy from './components/user-study.vue'
 
 Vue.use(Router)
 
@@ -53,8 +54,11 @@ export default new Router({
     // 个人中心
     {
       path: '/user',
-      name: 'user',
-      component: User
+      redirect:'/user-study',
+      component: User,
+      children:[
+        {path:'/user-study',component:UserStudy}
+      ]
     }
     // {
     //   path: '/about',
