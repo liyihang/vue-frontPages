@@ -80,7 +80,7 @@
     </el-container>
     <el-container>
       <el-row :gutter="24" style="margin:0 auto" justify="space-around">
-        <el-divider content-position="left" >编程练习</el-divider>
+        <el-divider content-position="left">编程练习</el-divider>
         <el-col :span="8">
           <el-card shadow="always">
             <h4>HTML</h4>
@@ -147,11 +147,11 @@
     </el-container>
     <el-container>
       <el-row :gutter="24" style="margin:0 auto" justify="space-around">
-        <el-divider content-position="left" >综合练习</el-divider>
+        <el-divider content-position="left">综合练习</el-divider>
         <el-col :span="8">
           <el-card shadow="always">
             <h4>HTML</h4>
-            <p >
+            <p>
               <el-link icon="el-icon-edit" @click="getExam(1)">HTML标签和JavaScript应用123</el-link>
             </p>
             <p>
@@ -212,10 +212,6 @@
         <!-- 多个 -->
       </el-row>
     </el-container>
-    <!-- footer -->
-    <el-footer>
-      <div class="login-footer">版权所有 2006 - 2019 苏ICP备16007882号-4</div>
-    </el-footer>
     <!-- 回到顶部 -->
     <el-backtop :bottom="100">
       <div
@@ -232,6 +228,10 @@
         <i class="el-icon-caret-top"></i>
       </div>
     </el-backtop>
+    <!-- footer -->
+    <el-footer>
+      <div class="login-footer">版权所有 2006 - 2019 苏ICP备16007882号-4</div>
+    </el-footer>
   </div>
 </template>
 <script>
@@ -250,8 +250,8 @@ export default {
 }
 </script>
 <style scoped>
-.el-col-8{
-  width:28rem;
+.el-col-8 {
+  width: 28rem;
 }
 .el-container {
   padding: 2rem;
@@ -322,7 +322,11 @@ export default {
 .easing-variables:hover {
   transform: rotate(128000deg);
 }
-h4{
-  margin:0;
+h4 {
+  margin: 0;
+}
+.el-backtop {
+  position: sticky;
+  float: right;
 }
 </style>

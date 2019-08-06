@@ -1,17 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>game</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but game doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+  <title>game</title>
+  <style>
+    body {
+            animation: myfirst 5s;
+            -webkit-animation: myfirst 5s;
+            /* Safari and Chrome */
+            transform: rotateX(0deg);
+            -webkit-transform: rotateX(0deg);
+        }
+
+        @keyframes myfirst {
+            from {
+                width: 1800px;
+                height: 1800px;
+                left: 100px;
+                top: -200px;
+                position: fixed;
+                z-index: 302;
+                display: block;
+            }
+
+            to {
+                width: 0px;
+                height: 0px;
+                padding: 0px;
+                left: 200px;
+                top: 200px;
+                position: fixed;
+                z-index: 302;
+                display: block;
+            }
+
+            from {
+                transform: rotate(0deg) translate(0px);
+                translate(100px);
+            }
+
+            to {
+                transform: rotate(360deg) translate(0px);
+                translate(100px);
+            }
+        }
+  </style>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but game doesn't work properly without JavaScript enabled. Please enable it to
+      continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
 </html>

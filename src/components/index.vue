@@ -45,11 +45,7 @@
         </el-col>
       </el-row>
     </el-container>
-    <!-- footer -->
-    <el-footer>
-      <div class="login-footer">版权所有 2006 - 2019 苏ICP备16007882号-4</div>
-    </el-footer>
-  <!-- 回到顶部 -->
+      <!-- 回到顶部 -->
     <el-backtop  :bottom="100">
     <div
       style="{
@@ -65,6 +61,11 @@
     <i class="el-icon-caret-top"></i>
     </div>
   </el-backtop>
+    <!-- footer -->
+    <el-footer>
+      <div class="login-footer">版权所有 2006 - 2019 苏ICP备16007882号-4</div>
+    </el-footer>
+
   </div>
 </template>
 <script>
@@ -161,5 +162,9 @@ export default {
   margin-bottom: 0;
   width: 100%;
   background-color: lightgrey;
+}
+.el-backtop {
+  position: sticky;
+  float: right;
 }
 </style>
