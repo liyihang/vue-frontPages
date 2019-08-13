@@ -7,11 +7,9 @@
         <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
           background-color="#2c3e50"
           text-color="#fff"
-          active-text-color="#ffd04b"
+          active-text-color="#fff"
         >
           <el-submenu index="1">
             <template slot="title">
@@ -30,20 +28,10 @@
               <span>个人中心</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="2-1">课程分享</el-menu-item>
-              <el-menu-item index="2-3">博客分享</el-menu-item>
-              <el-menu-item index="2-4">我的回复</el-menu-item>
-              <el-menu-item index="2-4">我的提问</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-         <el-submenu index="3">
-            <template slot="title">
-              <i class="el-icon-lock"></i>
-              <span>个人信息</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="3-1">资料修改</el-menu-item>
-              <el-menu-item index="3-2">密码修改</el-menu-item>
+              <el-menu-item index="2-1">
+                <router-link to="/usersettings"><a class="router-class">资料修改 </a> </router-link>
+              </el-menu-item>
+              <el-menu-item index="2-2">密码修改</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -71,5 +59,8 @@ export default {
   color: #333;
   text-align: center;
 }
-
+.router-class{
+  color: #fff;
+  text-decoration: none
+}
 </style>

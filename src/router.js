@@ -8,6 +8,7 @@ import InterviewDetail from './components/interviewDetail.vue'
 import Exam from './components/exam.vue'
 import User from './components/user.vue'
 import UserStudy from './components/user-study.vue'
+import UserSettings from './components/userSettings.vue'
 
 Vue.use(Router)
 
@@ -57,7 +58,8 @@ export default new Router({
       redirect: '/user-study',
       component: User,
       children: [
-        { path: '/user-study', component: UserStudy }
+        { path: '/user-study', component: UserStudy },
+        { path: '/usersettings', component: UserSettings }
       ]
     }
     // {
