@@ -54,10 +54,10 @@ export default new Router({
     // 个人中心
     {
       path: '/user',
-      redirect:'/user-study',
+      redirect: '/user-study',
       component: User,
-      children:[
-        {path:'/user-study',component:UserStudy}
+      children: [
+        { path: '/user-study', component: UserStudy }
       ]
     }
     // {
