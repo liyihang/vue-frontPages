@@ -31,7 +31,9 @@
               <el-menu-item index="2-1">
                 <router-link to="/usersettings"><a class="router-class">资料修改 </a> </router-link>
               </el-menu-item>
-              <el-menu-item index="2-2">密码修改</el-menu-item>
+              <el-menu-item index="2-2">
+                <router-link to="/resetpassword"><a class="router-class">密码修改 </a> </router-link>
+              </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>

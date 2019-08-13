@@ -32,7 +32,7 @@
         <el-form-item label="个人简介">
           <el-input type="textarea" v-model="userForm.desc"></el-input>
         </el-form-item>
-        <el-button type="primary">保存</el-button>
+        <el-button type="primary" class="save-class">保存</el-button>
       </el-form>
     </el-card>
   </div>
@@ -78,5 +78,10 @@ export default {
 .el-textarea{
     float: left;
     width: 30%;
+}
+.save-class{
+    float: left;
+    margin-left: 14rem;
+    margin-bottom: 1rem;
 }
 </style>

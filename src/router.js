@@ -9,6 +9,7 @@ import Exam from './components/exam.vue'
 import User from './components/user.vue'
 import UserStudy from './components/user-study.vue'
 import UserSettings from './components/userSettings.vue'
+import ReSetPws from './components/resetPassword.vue'
 
 Vue.use(Router)
 
@@ -59,7 +60,8 @@ export default new Router({
       component: User,
       children: [
         { path: '/user-study', component: UserStudy },
-        { path: '/usersettings', component: UserSettings }
+        { path: '/usersettings', component: UserSettings },
+        { path: '/resetpassword', component: ReSetPws }
       ]
     }
     // {
