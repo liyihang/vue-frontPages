@@ -18,7 +18,7 @@
             label-position="left"
           >
             <el-form-item label="用户名:">
-              <el-input v-model="sizeForm.name"></el-input>
+              <el-input v-model="sizeForm.username"></el-input>
             </el-form-item>
             <el-form-item label="密码:">
               <el-input type="password" v-model="sizeForm.password"></el-input>
@@ -46,21 +46,37 @@
   </div>
 </template>
 <script>
+  import qs from 'qs'
 export default {
   name: 'Login',
   data () {
     return {
       sizeForm: {
-        name: '',
+        username: '',
         password: ''
       }
     }
   },
   methods: {
     login () {
-      // 模拟假的登录
-      if (this.sizeForm.name == this.sizeForm.password !== '') {
-        this.$router.push('/user')
+      if (this.sizeForm.username === this.sizeForm.password !== '') {
+        // 删除token
+        window.sessionStorage.removeItem('token')
+        this.$http.post('/login', qs.stringify(this.sizeForm))
+          .then(res => {
+            if (res.data.status === 200){
+              // 获取认证信息并保存至sessionStorage中
+              window.sessionStorage.setItem('token', res.headers['authorization'])
+              this.$router.push('/')
+            }else {
+              window.sessionStorage.removeItem('token')
+              this.$message.error(res.data.msg);
+            }
+          })
+          .catch(res => {
+            window.sessionStorage.removeItem('token')
+            console.log('登录失败')
+          })
       }
     }
   }
