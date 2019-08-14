@@ -17,7 +17,9 @@
               <span>我的学习</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1">我的课程</el-menu-item>
+              <el-menu-item index="1-1">
+                 <router-link to="/mycourse"><a class="router-class">我的课程 </a> </router-link>
+              </el-menu-item>
               <el-menu-item index="1-3">我的收藏</el-menu-item>
               <el-menu-item index="1-4">我的点赞</el-menu-item>
             </el-menu-item-group>

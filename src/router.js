@@ -7,9 +7,10 @@ import CourseDetail from './components/courseDetail.vue'
 import InterviewDetail from './components/interviewDetail.vue'
 import Exam from './components/exam.vue'
 import User from './components/user.vue'
-import UserStudy from './components/user-study.vue'
+import UserStudy from './components/userStudy.vue'
 import UserSettings from './components/userSettings.vue'
 import ReSetPws from './components/resetPassword.vue'
+import MyCourse from './components/myCourse.vue'
 
 Vue.use(Router)
 
@@ -61,7 +62,8 @@ export default new Router({
       children: [
         { path: '/user-study', component: UserStudy },
         { path: '/usersettings', component: UserSettings },
-        { path: '/resetpassword', component: ReSetPws }
+        { path: '/resetpassword', component: ReSetPws },
+        { path: '/mycourse', component: MyCourse }
       ]
     }
     // {
