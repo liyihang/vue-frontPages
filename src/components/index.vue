@@ -25,7 +25,7 @@
       <el-row :gutter="24">
         <el-col :span="6" v-for="(item, index) in course_items" :key="index">
           <el-card shadow="hover">
-            <img src="../assets/java.png" alt class="exam-img" @click="goDetail(item.id)" />
+            <img :src="item.img" alt class="exam-img" @click="goDetail(item.id)" />
             <p @click="goDetail(item.id)">{{item.name}}</p>
           </el-card>
         </el-col>
@@ -118,7 +118,20 @@ export default {
     // 获取文章详情
     articleDetail (id) {
       this.$router.push('/interviewdetail/' + id)
+    },
+    getPassList(){
+      this.$http.get('/api/pass')
+        .then(res => {
+          this.course_items =  res.data.map(item => ({
+            id: item.id,
+            name: item.title,
+            img: item.picUrl
+          }))
+        })
     }
+  },
+  created(){
+    this.getPassList()
   }
 }
 </script>

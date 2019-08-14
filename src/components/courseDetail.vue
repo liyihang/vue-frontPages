@@ -14,23 +14,11 @@
     <el-container>
       <el-row :gutter="24" style="margin:0 auto" justify="space-around">
         <el-divider content-position="left" class="easing-variables">基础练习</el-divider>
-        <el-col :span="8">
+        <el-col :span="8" v-for="(pass, index) in passList" :key="index">
           <el-card shadow="always">
-            <h4 class="easing-variables">爱的魔力转圈圈</h4>
-            <p class="hover-underline-animation">
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用12678wefvsdfsdfaf</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
+            <h4 class="easing-variables">{{pass.title}}</h4>
+            <p v-for="(question, index) in pass.questionList" v-if="index < 5">
+              <el-link icon="el-icon-edit" @click="getExam(question, pass.id)">{{question.title}}</el-link>
             </p>
           </el-card>
         </el-col>
@@ -239,13 +227,22 @@ export default {
   name: 'courseDetail',
   data () {
     return {
-
+      passList: []
     }
   },
   methods: {
-    getExam (id) {
-      this.$router.push('/exam/' + id)
+    getExam (question, passId) {
+      this.$router.push('/exam/' + question.id + '?passId=' + passId)
+    },
+    getList(){
+      this.$http.get('/api/pass?pid=' + this.$route.params.id )
+        .then(res => {
+          this.passList = res.data
+        })
     }
+  },
+  created(){
+    this.getList()
   }
 }
 </script>
