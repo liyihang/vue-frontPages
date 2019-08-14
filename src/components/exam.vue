@@ -19,7 +19,8 @@
           </el-col>
         </el-row>
       </div>
-      <exam-single v-if="question.qtype === 1" :answer="answer.answer" :reply="reply" :optionalAnswer="optionalAnswer"></exam-single>
+      <exam-code></exam-code>
+      <exam-single v-if="question.qtype === 3" :answer="answer.answer" :reply="reply" :optionalAnswer="optionalAnswer"></exam-single>
       <exam-multiple v-if="question.qtype === 2" :answer="answer.answer" :reply="reply" :optional-answer="optionalAnswer"></exam-multiple>
       <!-- 收藏转发  反馈 -->
       <div class="exam-collection">
@@ -56,10 +57,11 @@
 <script>
   import examSingle from './exam/examSingle'
   import examMultiple from './exam/examMultiple'
+  import examCode from './exam/examCode'
 
   export default {
     name: 'exam',
-    components: {examSingle, examMultiple},
+    components: {examSingle, examMultiple, examCode},
     data() {
       return {
         radio1: 1,
