@@ -2,7 +2,7 @@
     <div class="exam-content">
         <el-card>
             <ul>
-                <li v-for="(option, index) in optionalAnswer" :key="index">
+                <li v-for="(option, index) in options" :key="index">
                     <el-radio @change="doSelect" v-model="select" :label="option.item">{{option.content}}</el-radio>
                 </li>
             </ul>
@@ -14,13 +14,14 @@
     export default {
         name: 'examSingle',
         props: {
-            optionalAnswer: Array,
+            optionalAnswer: String,
             reply: Function,
             answer: String
         },
         data() {
             return {
-                select: this.answer
+                select: this.answer,
+                options: JSON.parse(this.optionalAnswer)
             }
         },
         methods: {
@@ -30,7 +31,12 @@
         },
         watch: {
           answer(newVal, oldVal){
-            this.select = newVal
+            if (newVal){
+              this.select = newVal
+            }
+          },
+          optionalAnswer(newVal, oldVal){
+            this.options = JSON.parse(newVal)
           }
         }
     }

@@ -232,7 +232,7 @@ export default {
   },
   methods: {
     getExam (question, passId) {
-      this.$router.push('/exam/' + question.id + '?passId=' + passId)
+      this.$router.push('/exam/' + question.id + '?passId=' + passId + "&firstLevelPassId=" +this.$route.params.id )
     },
     getList(){
       this.$http.get('/api/pass?pid=' + this.$route.params.id )

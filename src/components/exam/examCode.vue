@@ -1,64 +1,63 @@
 <template>
-  <div class="exam-content">
-    <div id="container" style="height:500px;border:1px solid grey"></div>
+  <div id="examCode">
+    <MonacoEditor
+      width="100%"
+      height="350"
+      theme="vs"
+      :value="code"
+      language="javascript"
+      :options="options"
+      @change="onChange"
+    ></MonacoEditor>
   </div>
 </template>
 
 <script>
-  import * as monaco from 'monaco-editor'
-
+  import MonacoEditor from 'monaco-editor-vue';
   export default {
-    name: 'examCode',
-    props: {},
-    data() {
+    name: "examCode",
+    components: {
+      MonacoEditor
+    },
+    props: {
+      reply: Function,
+      answer: String,
+      optionalAnswer: String,
+    },
+    data () {
       return {
-        code: '// Type away! \n',
+        code: '',
         options: {
-          selectOnLineNumbers: false
-        }
+          //Monaco Editor Options
+        },
+        optional: JSON.parse(this.optionalAnswer),
+        codeTemplate: '',
       }
     },
     methods: {
-      onMounted(editor) {
-        this.editor = editor;
-      },
-      onCodeChange(editor) {
-        console.log(this.editor.getValue());
+      onChange (value) {
+        this.code = value
+        this.reply(value)
       }
     },
     watch: {
-      answer(newVal, oldVal) {
-        this.select = newVal
+      optionalAnswer:{
+        handler: (newVal, oldVal)=>{
+          this.optional = JSON.parse(newVal)
+          this.codeTemplate = this.optional.codeTemplate
+        }
       }
     },
-    mounted(){
-      monaco.editor.create(document.getElementById('container'), {
-        value: [
-          'function x() {',
-          '\tconsole.log("Hello world!");',
-          '}'
-        ].join('\n'),
-        language: 'javascript'
-      });
+    created(){
+      this.codeTemplate = this.optional.codeTemplate
+      this.code = (this.answer ? this.answer: this.codeTemplate)
     }
-  }
+  };
 </script>
 
 <style scoped>
-  li {
-    list-style-type: upper-alpha !important;
+  #examCode{
+    text-align: left;
+    border: 1px solid #eee;
   }
-
-  .el-card__header {
-    float: left;
-  }
-
-  /* 题目 */
-  .exam-content li {
-    padding: 1rem;
-    list-style-type: decimal;
-    float: left;
-    clear: both;
-  }
-
 </style>
