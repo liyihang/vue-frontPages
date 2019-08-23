@@ -3,7 +3,7 @@
     <el-card>
       <ul>
         <li v-for="(option, index) in options" :key="index">
-          <el-checkbox v-model="select" @change="doCheck" :label="option.item">{{option.content}}</el-checkbox>
+          <el-checkbox :disabled="disabled" v-model="select" @change="doCheck" :label="option.item">{{option.content}}</el-checkbox>
         </li>
       </ul>
     </el-card>
@@ -16,7 +16,8 @@
     props: {
       optionalAnswer: String,
       reply: Function,
-      answer: String
+      answer: String,
+      disabled: Boolean
     },
     data() {
       return {

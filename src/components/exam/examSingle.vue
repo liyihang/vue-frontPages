@@ -3,7 +3,7 @@
         <el-card>
             <ul>
                 <li v-for="(option, index) in options" :key="index">
-                    <el-radio @change="doSelect" v-model="select" :label="option.item">{{option.content}}</el-radio>
+                    <el-radio :disabled="disabled" @change="doSelect" v-model="select" :label="option.item">{{option.content}}</el-radio>
                 </li>
             </ul>
         </el-card>
@@ -16,7 +16,8 @@
         props: {
             optionalAnswer: String,
             reply: Function,
-            answer: String
+            answer: String,
+            disabled: Boolean
         },
         data() {
             return {

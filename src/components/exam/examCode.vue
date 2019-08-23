@@ -1,41 +1,32 @@
 <template>
-  <div id="examCode">
-    <MonacoEditor
-      width="100%"
-      height="350"
-      theme="vs"
-      :value="code"
-      language="javascript"
-      :options="options"
-      @change="onChange"
-    ></MonacoEditor>
+  <div>
+    <code-editor @on-change="onChange" :read-only="disabled" :codes="code"></code-editor>
   </div>
 </template>
 
 <script>
-  import MonacoEditor from 'monaco-editor-vue';
+  import codeEditor from './examEditor'
   export default {
     name: "examCode",
     components: {
-      MonacoEditor
+      codeEditor
     },
     props: {
       reply: Function,
       answer: String,
       optionalAnswer: String,
+      disabled: Boolean
     },
     data () {
       return {
         code: '',
-        options: {
-          //Monaco Editor Options
-        },
         optional: JSON.parse(this.optionalAnswer),
         codeTemplate: '',
       }
     },
     methods: {
       onChange (value) {
+        console.log(value)
         this.code = value
         this.reply(value)
       }
@@ -56,8 +47,4 @@
 </script>
 
 <style scoped>
-  #examCode{
-    text-align: left;
-    border: 1px solid #eee;
-  }
 </style>

@@ -23,16 +23,16 @@
           </el-col>
         </el-row>
       </div>
-      <exam-single v-if="question.qtype === 1" :answer="answer.answer" :reply="reply"
+      <exam-single :disabled="disabled" v-if="question.qtype === 1" :answer="answer.answer" :reply="reply"
                    :optionalAnswer="question.optionalAnswer"></exam-single>
-      <exam-multiple v-if="question.qtype === 2" :answer="answer.answer" :reply="reply"
+      <exam-multiple :disabled="disabled" v-if="question.qtype === 2" :answer="answer.answer" :reply="reply"
                      :optional-answer="question.optionalAnswer"></exam-multiple>
-      <exam-code v-if="question.qtype === 3" :answer="answer.answer" :reply="reply"
+      <exam-code :disabled="disabled" v-if="question.qtype === 3" :answer="answer.answer" :reply="reply"
                      :optional-answer="question.optionalAnswer"></exam-code>
-      <exam-short-answer v-if="question.qtype === 4" :answer="answer.answer" :reply="reply"></exam-short-answer>
-      <exam-judge v-if="question.qtype === 5" :answer="answer.answer" :reply="reply"></exam-judge>
-      <exam-fill-blank v-if="question.qtype === 6" :answer="answer.answer" :reply="reply" :optional-answer="question.optionalAnswer"></exam-fill-blank>
-      <exam-web v-if="question.qtype ===7" :answer="answer.answer" :reply="reply"
+      <exam-short-answer :disabled="disabled" v-if="question.qtype === 4" :answer="answer.answer" :reply="reply"></exam-short-answer>
+      <exam-judge :disabled="disabled" v-if="question.qtype === 5" :answer="answer.answer" :reply="reply"></exam-judge>
+      <exam-fill-blank :disabled="disabled" v-if="question.qtype === 6" :answer="answer.answer" :reply="reply" :optional-answer="question.optionalAnswer"></exam-fill-blank>
+      <exam-web :disabled="disabled" v-if="question.qtype ===7" :answer="answer.answer" :reply="reply"
                     :optional-answer="question.optionalAnswer" :question="question"></exam-web>
       <!-- 收藏转发  反馈 -->
       <div class="exam-collection">
@@ -130,7 +130,9 @@
         dialogTableVisible: false,
         checkResult: true,     //是否校验通过，默认true
         executeError: false,
-        errorMsg: ''
+        errorMsg: '',
+        record: {},
+        disabled: false   // 为true时表示不在闯关中，不能提交答案、不能编辑
       }
     },
     methods: {
@@ -163,6 +165,8 @@
       startPass(resolver) {
         this.$http.get('/api/pass/startPass/' + this.$route.query.passId)
           .then(res => {
+            this.record = res.data
+            this.disabled = !(this.record.status === 2) //不在闯关中，即不可编辑
             resolver()
           })
       },
@@ -219,6 +223,10 @@
       },
       // 提交答案
       submitAnswer(resolve) {
+        if (this.disabled){
+          resolve()
+          return
+        }
         // 答案未重新赋值，无需提交
         if (!this.answerVal) {
           resolve()
@@ -240,6 +248,7 @@
         this.answer = {
           id: this.answer.id,
           questionId: this.question.id,
+          recordId: this.record.id,
           passId: this.passId,
           answer: (typeof this.answerVal == 'string') ? this.answerVal : JSON.stringify(this.answerVal)
         }
@@ -339,6 +348,7 @@
     float: left;
     padding: 1rem;
   }
+
 
   .exam-item {
     margin: 2rem auto;

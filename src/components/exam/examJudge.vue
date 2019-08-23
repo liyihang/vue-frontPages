@@ -3,10 +3,10 @@
     <el-card>
       <ul>
         <li>
-          <el-radio @change="doSelect" v-model="select" label="1">正确</el-radio>
+          <el-radio :disabled="disabled" @change="doSelect" v-model="select" label="1">正确</el-radio>
         </li>
         <li>
-          <el-radio @change="doSelect" v-model="select" label="0">错误</el-radio>
+          <el-radio :disabled="disabled" @change="doSelect" v-model="select" label="0">错误</el-radio>
         </li>
       </ul>
     </el-card>
@@ -18,7 +18,8 @@
     name: 'examJudge',
     props: {
       reply: Function,
-      answer: String
+      answer: String,
+      disabled: Boolean
     },
     data() {
       return {

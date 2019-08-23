@@ -10,7 +10,8 @@
     name: 'examShortAnswer',
     props: {
       reply: Function,
-      answer: String
+      answer: String,
+      disabled: Boolean
     },
     data () {
       return {
@@ -30,6 +31,10 @@
       }
       editor.create()
       editor.txt.html(this.editorContent)
+
+      if (this.disabled) {
+        editor.$textElem.attr('contenteditable', false)
+      }
     }
   }
 </script>

@@ -20,10 +20,11 @@
             action="http://localhost:9001/api/file/uploadKeepName?source=replyAnswer"
             :multiple="multiple"
             :limit="limit"
+            :disabled="disabled"
             :on-success="fileUploadSuccess"
             :on-error="fileUploadError"
             :file-list="fileList">
-            <el-button size="small" type="primary">点击上传</el-button>
+            <el-button :disabled="disabled" size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">请上传作答结果(上传war包或者项目源码)</div>
           </el-upload>
         </div>
@@ -57,7 +58,8 @@
       reply: Function,
       answer: String,
       optionalAnswer: String,
-      question: Object
+      question: Object,
+      disabled: Boolean
     },
     data() {
       return {

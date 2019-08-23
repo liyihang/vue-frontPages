@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="replyDiv" v-for="(item, i) in replyValues" :key="i">
-      <el-input placeholder="请输入内容"  v-model="replyValues[i]" @change="doChange">
+      <el-input :disabled="disabled" placeholder="请输入内容"  v-model="replyValues[i]" @change="doChange">
         <template slot="prepend">第{{i+1}}空</template>
       </el-input>
     </div>
@@ -14,7 +14,8 @@
     props: {
       reply: Function,
       answer: String,
-      optionalAnswer: String
+      optionalAnswer: String,
+      disabled: Boolean
     },
     data() {
       return {
