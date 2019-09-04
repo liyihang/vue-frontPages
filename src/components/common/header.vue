@@ -16,7 +16,9 @@
           <router-link to="/">首页</router-link>
         </el-menu-item>
         <el-menu-item index="2">学院网站</el-menu-item>
-        <el-menu-item index="3">Tlias系统</el-menu-item>
+        <el-menu-item index="3">
+          <router-link tag="li" to="/ranking">排行榜</router-link>
+        </el-menu-item>
         <el-menu-item index="4">MOOC在线</el-menu-item>
         <el-menu-item index="5">
           <a href="#" target="_blank">意见反馈</a>

@@ -11,6 +11,10 @@ import UserStudy from './components/userStudy.vue'
 import UserSettings from './components/userSettings.vue'
 import ReSetPws from './components/resetPassword.vue'
 import MyCourse from './components/myCourse.vue'
+import Ranking from './components/ranking.vue'
+import RankingOne from './components/common/ranking.vue'
+import RankingTwo from './components/common/ranking.vue'
+import RankingThree from './components/common/ranking.vue'
 
 Vue.use(Router)
 
@@ -53,6 +57,16 @@ export default new Router({
       path: '/',
       name: 'index',
       component: Index
+    },
+    // ranking page
+    {
+      path: '/ranking',
+      component: Ranking,
+      children: [
+        {path: '/ranking/1',component: RankingOne},
+        {path: '/ranking/2',component: RankingTwo},
+        {path: '/ranking/3',component: RankingThree},
+      ]
     },
     // 个人中心
     {
