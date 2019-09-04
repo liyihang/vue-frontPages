@@ -24,7 +24,7 @@ export default new Router({
   routes: [
     // 做题
     {
-      path: '/exam/:id',
+      path: '/exam',
       name: 'exam',
       component: Exam
     },

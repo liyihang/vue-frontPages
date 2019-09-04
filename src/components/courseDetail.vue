@@ -11,195 +11,39 @@
       <el-breadcrumb-item>课程详情</el-breadcrumb-item>
     </el-breadcrumb>-->
     <!-- 课程详情 -->
-    <el-container>
-      <el-row :gutter="24" style="margin:0 auto" justify="space-around">
-        <el-divider content-position="left" class="easing-variables">基础练习</el-divider>
-        <el-col :span="8" v-for="(pass, index) in passList" :key="index">
+    <el-container v-for="arr in passListSplitBy3">
+      <el-row :gutter="50" style="margin:0 auto" justify="space-around">
+        <el-divider content-position="left" class="easing-variables"></el-divider>
+        <el-col :span="8" v-for="(pass, index) in arr" :key="index">
           <el-card shadow="always">
-            <h4 class="easing-variables">{{pass.title}}</h4>
-            <p v-for="(question, index) in pass.questionList" v-if="index < 5">
-              <el-link icon="el-icon-edit" @click="getExam(question, pass.id)">{{question.title}}</el-link>
-            </p>
-          </el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card shadow="always">
-            <h4 class="easing-variables">HTML</h4>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-          </el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card shadow="always">
-            <h4 class="easing-variables">HTML</h4>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
+            <div slot="header" class="easing-variables">
+              <h4>{{pass.title}}</h4>
+            </div>
+            <div>
+              <span v-if="!pass.record">
+                <label>未闯关，</label>
+                <el-link disabled icon="el-icon-edit" @click="getExam(pass.id)">本关卡尚未开通</el-link>
+              </span>
+              <span v-else-if="pass.record.status === 4">
+                <label>已通关{{pass.record.times}}次，</label>
+                <el-link icon="el-icon-edit" @click="getExam(pass.id)">再次闯关</el-link>
+              </span>
+              <span v-else-if="pass.record.status === 2">
+                <label>第{{pass.record.times}}闯关中，</label>
+                <el-link icon="el-icon-edit" @click="getExam(pass.id)">继续闯关</el-link>
+              </span>
+              <span v-else-if="pass.record.status === 3">
+                <label>第{{pass.record.times}}次闯关审批中，</label>
+                <el-link icon="el-icon-edit" @click="getExam(pass.id)">查看答题情况</el-link>
+              </span>
+            </div>
           </el-card>
         </el-col>
 
         <!-- 多个 -->
       </el-row>
     </el-container>
-    <el-container>
-      <el-row :gutter="24" style="margin:0 auto" justify="space-around">
-        <el-divider content-position="left">编程练习</el-divider>
-        <el-col :span="8">
-          <el-card shadow="always">
-            <h4>HTML</h4>
-            <p>
-              <el-link icon="el-icon-edit" @click="(1)">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-          </el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card shadow="always">
-            <h4>HTML</h4>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-          </el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card shadow="always">
-            <h4>HTML</h4>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-          </el-card>
-        </el-col>
 
-        <!-- 多个 -->
-      </el-row>
-    </el-container>
-    <el-container>
-      <el-row :gutter="24" style="margin:0 auto" justify="space-around">
-        <el-divider content-position="left">综合练习</el-divider>
-        <el-col :span="8">
-          <el-card shadow="always">
-            <h4>HTML</h4>
-            <p>
-              <el-link icon="el-icon-edit" @click="getExam(1)">HTML标签和JavaScript应用123</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-          </el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card shadow="always">
-            <h4>HTML</h4>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-          </el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card shadow="always">
-            <h4>HTML</h4>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-            <p>
-              <el-link icon="el-icon-edit">HTML标签和JavaScript应用</el-link>
-            </p>
-          </el-card>
-        </el-col>
-
-        <!-- 多个 -->
-      </el-row>
-    </el-container>
     <!-- 回到顶部 -->
     <el-backtop :bottom="100">
       <div
@@ -227,21 +71,36 @@ export default {
   name: 'courseDetail',
   data () {
     return {
-      passList: []
+      passList: [],
+      passListSplitBy3: []
     }
   },
   methods: {
-    getExam (question, passId) {
-      this.$router.push('/exam/' + question.id + '?passId=' + passId)
+    getExam (passId) {
+      this.$router.push('/exam' + '?passId=' + passId + "&firstLevelPassId=" +this.$route.params.id )
     },
     getList(){
       this.$http.get('/api/pass?pid=' + this.$route.params.id )
         .then(res => {
           this.passList = res.data
+
+          for (let i = 0; i < this.passList.length/3; i++) {
+            this.$set(this.passListSplitBy3, i, new Array())
+            for (let j = 0; j < 3; j++) {
+              let index = 3*i + j;
+              if (index === this.passList.length) {
+                return
+              }
+              this.passListSplitBy3[i][j] = this.passList[index]
+            }
+          }
         })
+    },
+    handleData(){
+
     }
   },
-  created(){
+  mounted(){
     this.getList()
   }
 }

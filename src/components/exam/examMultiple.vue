@@ -2,8 +2,8 @@
   <div class="exam-content">
     <el-card>
       <ul>
-        <li v-for="(option, index) in optionalAnswer" :key="index">
-          <el-checkbox v-model="select" @change="doCheck" :label="option.item">{{option.content}}</el-checkbox>
+        <li v-for="(option, index) in options" :key="index">
+          <el-checkbox :disabled="disabled" v-model="select" @change="doCheck" :label="option.item">{{option.content}}</el-checkbox>
         </li>
       </ul>
     </el-card>
@@ -14,13 +14,15 @@
   export default {
     name: 'examMultiple',
     props: {
-      optionalAnswer: Array,
+      optionalAnswer: String,
       reply: Function,
-      answer: String
+      answer: String,
+      disabled: Boolean
     },
     data() {
       return {
-        select: this.answer? JSON.parse(this.answer): []
+        select: this.answer? JSON.parse(this.answer): [],
+        options: JSON.parse(this.optionalAnswer)
       }
     },
     methods: {
@@ -35,6 +37,9 @@
         }else {
           this.select = newVal
         }
+      },
+      optionalAnswer(newVal, oldVal){
+        this.options = JSON.parse(newVal)
       }
     }
   }

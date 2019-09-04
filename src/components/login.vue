@@ -67,6 +67,10 @@ export default {
             if (res.data.status === 200){
               // 获取认证信息并保存至sessionStorage中
               window.sessionStorage.setItem('token', res.headers['authorization'])
+              // 获取登录的用户用户名
+              this.$http.get('/login/name').then(res => {
+                window.sessionStorage.setItem('loginName', res.data)
+              })
               this.$router.push('/')
             }else {
               window.sessionStorage.removeItem('token')

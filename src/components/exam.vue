@@ -6,7 +6,11 @@
       <div class="exam-header">
         <el-divider content-position="left">
           <h3>
-            <i class="el-icon-edit"></i>选择题
+            <i class="el-icon-edit"></i>
+            {{
+              question.qtype === 1 ? '选择题': question.qtype === 2 ? '多选题' : question.qtype === 3 ? '编程题':
+              question.qtype === 4 ? '简答题': question.qtype === 5 ? '判断题' : question.qtype === 6 ? '填空题': '实操题'
+            }}
           </h3>
         </el-divider>
       </div>
@@ -19,9 +23,17 @@
           </el-col>
         </el-row>
       </div>
-      <exam-code></exam-code>
-      <exam-single v-if="question.qtype === 3" :answer="answer.answer" :reply="reply" :optionalAnswer="optionalAnswer"></exam-single>
-      <exam-multiple v-if="question.qtype === 2" :answer="answer.answer" :reply="reply" :optional-answer="optionalAnswer"></exam-multiple>
+      <exam-single :disabled="disabled" v-if="question.qtype === 1" :answer="answer.answer" :reply="reply"
+                   :optionalAnswer="question.optionalAnswer"></exam-single>
+      <exam-multiple :disabled="disabled" v-if="question.qtype === 2" :answer="answer.answer" :reply="reply"
+                     :optional-answer="question.optionalAnswer"></exam-multiple>
+      <exam-code :disabled="disabled" v-if="question.qtype === 3" :answer="answer.answer" :reply="reply"
+                     :optional-answer="question.optionalAnswer"></exam-code>
+      <exam-short-answer :disabled="disabled" v-if="question.qtype === 4" :answer="answer.answer" :reply="reply"></exam-short-answer>
+      <exam-judge :disabled="disabled" v-if="question.qtype === 5" :answer="answer.answer" :reply="reply"></exam-judge>
+      <exam-fill-blank :disabled="disabled" v-if="question.qtype === 6" :answer="answer.answer" :reply="reply" :optional-answer="question.optionalAnswer"></exam-fill-blank>
+      <exam-web :disabled="disabled" v-if="question.qtype ===7" :answer="answer.answer" :reply="reply"
+                    :optional-answer="question.optionalAnswer" :question="question"></exam-web>
       <!-- 收藏转发  反馈 -->
       <div class="exam-collection">
         <el-row>
@@ -39,14 +51,51 @@
           </el-badge>
           <!-- 上下题按钮 -->
           <span class="exam-submit">
-            <el-button type="warning">结束考试</el-button>
-            <el-button type="primary" @click="preQuestion()">上一题</el-button>
-            <el-button type="primary" @click="nextQuestion()">下一题</el-button>
+            <el-button type="primary" plain
+                       v-if="question.qtype === 3"
+                       @click="executeCode" icon="el-icon-caret-right">在线运行</el-button>
+            <el-button type="primary" v-if="notFirstQuestion" @click="preQuestion()">上一题</el-button>
+            <el-button type="primary" v-if="notLastQuestion" @click="nextQuestion()">下一题</el-button>
+            <el-button type="warning" @click="endPass">结束考试</el-button>
           </span>
         </el-row>
       </div>
       <!-- 分页 -->
-      <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :pageSize="1"
+        :total="total">
+      </el-pagination>
+
+      <!-- 校验结果 -->
+      <el-dialog title="执行结果" :visible.sync="dialogTableVisible">
+        <el-table :data="checkResultList">
+          <el-table-column type="index" width="100"></el-table-column>
+          <el-table-column property="params" label="测试参数" width="100"></el-table-column>
+          <el-table-column property="executeResult" label="运行结果" width="100"></el-table-column>
+          <el-table-column property="expectResult" label="期望运行结果"></el-table-column>
+          <el-table-column label="结果">
+            <template slot-scope="scope">
+              <i class="el-icon-success" v-if="scope.row.statusCode==1"></i>
+              <i class="el-icon-error" v-if="scope.row.statusCode==0"></i>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-dialog>
+
+      <!-- 错误信息 -->
+      <el-dialog
+        title="执行失败"
+        :visible.sync="executeError"
+        width="30%">
+        <div class="errorMsg">{{errorMsg}}</div>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="executeError = false">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
     <!-- footer -->
     <el-footer>
@@ -58,40 +107,53 @@
   import examSingle from './exam/examSingle'
   import examMultiple from './exam/examMultiple'
   import examCode from './exam/examCode'
+  import ExamShortAnswer from "./exam/examShortAnswer";
+  import ExamJudge from "./exam/examJudge";
+  import ExamFillBlank from "./exam/examFillBlank";
+  import ExamWeb from "./exam/examWeb";
 
   export default {
     name: 'exam',
-    components: {examSingle, examMultiple, examCode},
+    components: {ExamWeb, ExamFillBlank, ExamJudge, ExamShortAnswer, examSingle, examMultiple, examCode},
     data() {
       return {
         radio1: 1,
         question: {},
-        optionalAnswer: [],
         questionList: [],
         answer: {},
         answerVal: '',
         answerMap: [],
-        passId: this.$route.query.passId
+        passId: this.$route.query.passId,
+        currentPage: 1,
+        total: 10,
+        checkResultList: [],
+        dialogTableVisible: false,
+        checkResult: true,     //是否校验通过，默认true
+        executeError: false,
+        errorMsg: '',
+        record: {},
+        disabled: false   // 为true时表示不在闯关中，不能提交答案、不能编辑
       }
     },
     methods: {
       findQuestionById() {
         const vm = this
         this.questionList.forEach((q, index) => {
-          if (q.id === (vm.$route.params.id*1)){
+          if (q.id === (vm.$route.params.id * 1)) {
             vm.question = q
             return
           }
         })
       },
       // 第一题
-      firstQuestion(){
+      firstQuestion() {
         this.question = this.questionList[0]
       },
-      findQuestionList(){
+      findQuestionList() {
         this.$http.get('/api/question/byPassId?passId=' + this.$route.query.passId)
           .then(res => {
             this.questionList = res.data
+            this.total = this.questionList.length
             this.firstQuestion()
           })
       },
@@ -100,44 +162,85 @@
         this.answerVal = val
       },
       // 开始闯关
-      startPass(){
+      startPass(resolver) {
         this.$http.get('/api/pass/startPass/' + this.$route.query.passId)
-          .then(res => {})
+          .then(res => {
+            this.record = res.data
+            this.disabled = !(this.record.status === 2) //不在闯关中，即不可编辑
+            resolver()
+          })
+      },
+      // 结束闯关
+      endPass(){
+        // 先提交答案，再结束考试
+        new Promise(this.submitAnswer)
+          .then(res => {
+            this.$confirm('确认结束闯关?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            })
+            .then(() => {
+            this.$http.put('/api/pass/endPass/' + this.$route.query.passId)
+              .then(res => {
+                // 提交成功，返回关卡列表
+                this.$router.push('/coursedetail/' + this.$route.query.firstLevelPassId)
+              })
+            })
+            .catch(res => {
+            })
+          })
+          .catch(res => {
+
+          })
+
       },
       // 下一题,isCb:是否是调用的回调函数
-      nextQuestion(isCb){
-        // 直接进入下一题
-        if (isCb){
-          this.question = this.questionList[this.questionNumber+1]
-          return
-        }
-        // 提交答案
-        this.submitAnswer(this.nextQuestion)
+      nextQuestion() {
+        new Promise(this.submitAnswer)
+          .then(res => {
+            // 下一题
+            this.question = this.questionList[this.questionNumber + 1]
+            this.currentPage++
+          })
       },
       //上一题
-      preQuestion(isCb){
-        if (isCb){
-          this.question = this.questionList[this.questionNumber-1]
-          return
-        }
-        this.submitAnswer(this.preQuestion)
+      preQuestion() {
+        new Promise(this.submitAnswer)
+          .then(res => {
+            // 上一题
+            this.question = this.questionList[this.questionNumber - 1]
+            this.currentPage--
+          })
+      },
+      // 根据索引定位问题
+      indexQuestion(index){
+        new Promise(this.submitAnswer)
+          .then(res => {
+            // 获取索引对应的题目
+            this.question = this.questionList[index]
+          })
       },
       // 提交答案
-      submitAnswer(callback){
+      submitAnswer(resolve) {
+        if (this.disabled){
+          resolve()
+          return
+        }
         // 答案未重新赋值，无需提交
-        if (!this.answerVal){
-          callback(true)
+        if (!this.answerVal) {
+          resolve()
           return
         }
         // 判断答案是否发生了改变
-        if (typeof this.answerVal === 'string'){
-          if (this.answerVal === this.answer.answer){
-            callback(true)
+        if (typeof this.answerVal === 'string') {
+          if (this.answerVal === this.answer.answer) {
+            resolve()
             return
           }
         } else {
-          if (JSON.stringify(this.answerVal) === this.answer.answer){
-            callback(true)
+          if (JSON.stringify(this.answerVal) === this.answer.answer) {
+            resolve()
             return
           }
         }
@@ -145,8 +248,9 @@
         this.answer = {
           id: this.answer.id,
           questionId: this.question.id,
+          recordId: this.record.id,
           passId: this.passId,
-          answer: (typeof this.answerVal == 'string') ? this.answerVal: JSON.stringify(this.answerVal)
+          answer: (typeof this.answerVal == 'string') ? this.answerVal : JSON.stringify(this.answerVal)
         }
         // 提交本题的答案
         this.$http.post('/api/answer', this.answer)
@@ -158,42 +262,81 @@
             this.answer = {}
             this.answerVal = ''
             // 执行回调函数
-            callback(true)
+            resolve()
           })
       },
       // 获取已提交的所有答案
-      loadSubmitedAnswerList(){
+      loadSubmittedAnswerList(resolve) {
         this.$http.get('/api/answer/loadAnswer?passId=' + this.passId)
           .then(res => {
             this.answerMap = res.data
+            resolve()
+          })
+      },
+      handleCurrentChange(val){
+        this.currentPage = val
+        this.indexQuestion(val -1)
+      },
+      // 在线运行
+      executeCode(){
+        var param = {
+          questionId: this.question.id,
+          code: this.answerVal
+        }
+        this.$http.post('/api/question/executeCode', param)
+          .then(res => {
+            this.checkResultList = res.data.data
+            this.dialogTableVisible = true
+            if (res.data.status == 200){
+              this.checkResult = false
+            }
+          })
+          .catch(res => {
+            if (res.response){
+              this.executeError = true
+              this.errorMsg = res.response.data.msg
+            } else {
+              alert("执行失败")
+            }
           })
       }
     },
     created() {
-      this.startPass()
-      this.findQuestionList()
-      this.loadSubmitedAnswerList()
+      new Promise(this.startPass)
+        .then(res => {
+          new Promise(this.loadSubmittedAnswerList)
+            .then(res => {
+              this.findQuestionList()
+            })
+        })
+
     },
     watch: {
-      question(){
-        this.optionalAnswer = JSON.parse(this.question.optionalAnswer)
-        if (this.answerMap){
-          this.answer = this.answerMap[this.question.id] ? this.answerMap[this.question.id]: {}
+      question() {
+        if (this.answerMap) {
+          this.answer = this.answerMap[this.question.id] ? this.answerMap[this.question.id] : {}
+          this.answerVal = this.answer.answer
         }
       }
     },
     computed: {
-      // 是否是第一题
-      isFirstQuestion(){
+      // 不是第一题
+      notFirstQuestion() {
+        if (!this.questionList || this.questionList.length ===0 || !this.question){
+          return
+        }
         const firstQuestion = this.questionList[0]
-        return this.question.id === firstQuestion.id
+        return !(this.question.id === firstQuestion.id)
       },
-      // 是否是最后一题
-      isLastQuestion(){
-        const lastQuestion = this.questionList[this.questionList.length -1]
-        return this.question.id === lastQuestion.id
+      // 不是最后一题
+      notLastQuestion() {
+        if (!this.questionList || this.questionList.length ===0 || !this.question){
+          return
+        }
+        const lastQuestion = this.questionList[this.questionList.length - 1]
+        return !(this.question.id === lastQuestion.id)
       },
-      questionNumber(){ //题号
+      questionNumber() { //题号
         return this.questionList.indexOf(this.question)
       }
     }
@@ -203,8 +346,9 @@
 
   .exam-title p {
     float: left;
-    padding: 2rem;
+    padding: 1rem;
   }
+
 
   .exam-item {
     margin: 2rem auto;
@@ -246,5 +390,9 @@
   .el-pagination {
     clear: both;
     margin: 6rem;
+  }
+
+  .errorMsg {
+    white-space: pre-wrap
   }
 </style>

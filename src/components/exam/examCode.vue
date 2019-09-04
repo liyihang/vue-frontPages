@@ -1,64 +1,50 @@
 <template>
-  <div class="exam-content">
-    <div id="container" style="height:500px;border:1px solid grey"></div>
+  <div>
+    <code-editor @on-change="onChange" :read-only="disabled" :codes="code"></code-editor>
   </div>
 </template>
 
 <script>
-  import * as monaco from 'monaco-editor'
-
+  import codeEditor from './examEditor'
   export default {
-    name: 'examCode',
-    props: {},
-    data() {
+    name: "examCode",
+    components: {
+      codeEditor
+    },
+    props: {
+      reply: Function,
+      answer: String,
+      optionalAnswer: String,
+      disabled: Boolean
+    },
+    data () {
       return {
-        code: '// Type away! \n',
-        options: {
-          selectOnLineNumbers: false
-        }
+        code: '',
+        optional: JSON.parse(this.optionalAnswer),
+        codeTemplate: '',
       }
     },
     methods: {
-      onMounted(editor) {
-        this.editor = editor;
-      },
-      onCodeChange(editor) {
-        console.log(this.editor.getValue());
+      onChange (value) {
+        console.log(value)
+        this.code = value
+        this.reply(value)
       }
     },
     watch: {
-      answer(newVal, oldVal) {
-        this.select = newVal
+      optionalAnswer:{
+        handler: (newVal, oldVal)=>{
+          this.optional = JSON.parse(newVal)
+          this.codeTemplate = this.optional.codeTemplate
+        }
       }
     },
-    mounted(){
-      monaco.editor.create(document.getElementById('container'), {
-        value: [
-          'function x() {',
-          '\tconsole.log("Hello world!");',
-          '}'
-        ].join('\n'),
-        language: 'javascript'
-      });
+    created(){
+      this.codeTemplate = this.optional.codeTemplate
+      this.code = (this.answer ? this.answer: this.codeTemplate)
     }
-  }
+  };
 </script>
 
 <style scoped>
-  li {
-    list-style-type: upper-alpha !important;
-  }
-
-  .el-card__header {
-    float: left;
-  }
-
-  /* 题目 */
-  .exam-content li {
-    padding: 1rem;
-    list-style-type: decimal;
-    float: left;
-    clear: both;
-  }
-
 </style>
